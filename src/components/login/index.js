@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect, withRouter  } from 'react-router-dom';
-import firebase from 'firebase'
-
+import firebase from './../../firebase'
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -12,23 +11,30 @@ export default class Login extends Component {
 
     this.state = {
       redirect: false,
-      userName: '',
+      currentUser: '',
       password: '',
       isLoading: false,
       error: ''
     };
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user){
+        this.setState({
+          redirect: true
+        })
+      }
+    })
   }
 
   onSubmit = e => {
     e.preventDefault()
-
     const { email, password } = this.state
-    firebase
-      .signInWithEmailAndPassword(email, password)
+    console.log(email,password)
+    firebase.auth().signInWithEmailAndPassword(email, password)
       .then(response => {
         this.setState({
           currentUser: response.user
         })
+        this.props.history.push('chatroom');
       })
       .catch(error => {
         this.setState({
@@ -39,7 +45,7 @@ export default class Login extends Component {
 
   renderRedirect = () => {
     return <Redirect to='/chatroom' />;
-  };
+  }
   onRegister = () => {
     this.props.history.push('register');
   }
@@ -47,6 +53,14 @@ export default class Login extends Component {
   isLoggedIn() {
 
   } 
+
+  onChange = e => {
+    const { name, value } = e.target
+
+    this.setState({
+      [name]: value
+    })
+  }
 
   render() {
     return (

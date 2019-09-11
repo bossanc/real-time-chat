@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter  } from 'react-router-dom';
+import firebase from './../../firebase'
 
 export default class Register extends Component {
   constructor(props) {
     super(props);
-
-    this.isLoggedIn = this.isLoggedIn.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
@@ -16,19 +15,35 @@ export default class Register extends Component {
     };
   }
 
-  onSubmit(e) {
-    e.preventDefault();
-    this.isLoggedIn();
-    this.setState({ isLoading: true, error:'' });
+  onSubmit = e => {
+    e.preventDefault()
+    const { email, password } = this.state
+    console.log(email,password)
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(response => {
+        const listMsgData = this.state.listMsg.concat({
+          email: response.email
+         })
+        firebase.database().ref('users').push(listMsgData);
+      })
+      .catch(error => {
+        this.setState({
+          message: error.message
+        })
+      })
   }
 
   onLogin = () => {
     this.props.history.push('');
   }
 
-  isLoggedIn() {
+  onChange = e => {
+    const { name, value } = e.target
 
-  } 
+    this.setState({
+      [name]: value
+    })
+  }
 
   render() {
     return (
