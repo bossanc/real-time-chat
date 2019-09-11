@@ -17,20 +17,25 @@ export default class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault()
-    const { email, password } = this.state
-    console.log(email,password)
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+    const { email, password, cpassword } = this.state
+    if(password === cpassword) {
+      firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(response => {
-        const listMsgData = this.state.listMsg.concat({
-          email: response.email
-         })
+        const listMsgData = {
+          email: email
+         }
         firebase.database().ref('users').push(listMsgData);
       })
       .catch(error => {
         this.setState({
           message: error.message
         })
+        alert(error.message)
       })
+    } else {
+      alert("Password and confirm password not match")
+    }
+
   }
 
   onLogin = () => {
@@ -56,6 +61,8 @@ export default class Register extends Component {
                 <input
                   className='groupname'
                   placeholder='Enter Your Email'
+                  type='text'
+                  name='email'
                   onChange={this.onChange}
                 />
               </div>
@@ -63,6 +70,8 @@ export default class Register extends Component {
                 <input
                   className='groupname'
                   placeholder='Enter Your Password'
+                  type='password'
+                  name='password'
                   onChange={this.onChange}
                 />
               </div>
@@ -70,6 +79,8 @@ export default class Register extends Component {
                 <input
                   className='groupname'
                   placeholder='Enter Your Confirm Password'
+                  type='password'
+                  name='cpassword'
                   onChange={this.onChange}
                 />
               </div>

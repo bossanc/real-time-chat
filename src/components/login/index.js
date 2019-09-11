@@ -5,7 +5,6 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
 
-    this.isLoggedIn = this.isLoggedIn.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -40,6 +39,7 @@ export default class Login extends Component {
         this.setState({
           message: error.message
         })
+        alert(error.message)
       })
   }
 
@@ -49,10 +49,6 @@ export default class Login extends Component {
   onRegister = () => {
     this.props.history.push('register');
   }
-
-  isLoggedIn() {
-
-  } 
 
   onChange = e => {
     const { name, value } = e.target
