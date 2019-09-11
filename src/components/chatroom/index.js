@@ -29,7 +29,7 @@ class App extends Component {
       if (user) {
         const listMsgData = this.state.listMsg.concat({
           key: Math.random().toString().replace('.',''),
-          date: moment().add(7,'hours').format(),
+          date: moment().add().format(),
           message: msg,
           user: user.email,
           uid: user.uid,

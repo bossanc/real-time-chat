@@ -25,6 +25,7 @@ export default class Register extends Component {
           email: email
          }
         firebase.database().ref('users').push(listMsgData);
+        this.props.history.push('chatroom');
       })
       .catch(error => {
         this.setState({

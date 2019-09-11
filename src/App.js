@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Login from './components/login/';
 import Register from './components/register/';
 import Chatroom from './components/chatroom/';
+import 'antd/dist/antd.css';
 class App extends Component {
   constructor(props) {
     super(props);
