@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import firebase from 'firebase'
 import { config } from './config'
 import Login from './components/login/';
@@ -15,11 +15,11 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="container">
+        <div className='container'>
           <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/chatroom" component={Chatroom} />
+            <Route exact path='/' component={Login} />
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/chatroom' component={Chatroom} />
           </Switch>
         </div>
       </React.Fragment>
