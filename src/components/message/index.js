@@ -5,9 +5,8 @@ let defaults = {
     height: 50,
     width: 50,
   };
-
+let fontMessage
 const Message = (props) => {
-
     return (
         <div style={{ marginTop:10 }}>
             {
@@ -18,7 +17,17 @@ const Message = (props) => {
                           <p>Date : {moment(msg.date).format('MMMM Do YYYY, h:mm:ss a')}</p>
                         </div>
                       );
-                    return <p key = { msg.key }><Popover content={content} title="User detail" trigger="hover"><img src ={`https://ui-avatars.com/api/?name=${msg.user}&rounded=true`} style = {defaults} /></Popover> { msg.message }</p>
+                    if(msg.user === props.user){
+                        fontMessage = {
+                            fontWeight: 'bold'
+                        }
+                    } else {
+                        fontMessage = {
+                            fontWeight: 'bold',
+                            color: 'blue'
+                        }
+                    }
+                    return <p key = { msg.key } style = {fontMessage}><Popover content={content} title="User detail" trigger="hover"><img src ={`https://ui-avatars.com/api/?name=${msg.user}&rounded=true`} style = {defaults} /></Popover> { msg.message }</p>
                 }) 
             }
         </div>        

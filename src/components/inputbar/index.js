@@ -4,7 +4,7 @@ import firebase from './../../firebase'
 class InputBar extends Component {
 
     state = {
-        msg: ""
+        msg: ''
     }
 
     onTextChange = (e) => {
@@ -15,6 +15,9 @@ class InputBar extends Component {
 
     onClickButton = () => {
         this.props.onClickButtonHandler(this.state.msg)
+        this.setState({
+            msg: ''
+        })
     }
     onLogout = () => {
         firebase.auth().signOut()
@@ -25,7 +28,11 @@ class InputBar extends Component {
             console.error(error)
         });
     }
-
+    _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            this.onClickButton()
+        }
+    }
      render() {
          return(
             <div className="panel-footer">
@@ -36,6 +43,7 @@ class InputBar extends Component {
                         id="btn-input" 
                         type="text" 
                         className="form-control input-sm" 
+                        onKeyDown={this._handleKeyDown}
                         placeholder="Type your message here..." />
                      <span className="input-group-btn">
                         <button className="btn btn-primary btn-sm" 

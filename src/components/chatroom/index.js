@@ -5,7 +5,10 @@ import InputBar from './../inputbar/'
 import Message from './../message/'
 import moment from 'moment';
 class App extends Component {
-  state = { listMsg: [] }
+  state = { 
+    listMsg: [],
+    user: '' 
+  }
   constructor(props) {
     super(props)
     var that  = this;
@@ -18,6 +21,9 @@ class App extends Component {
              })
            }
         });
+        that.setState({
+          user: user.email
+        })
       } else {
         this.props.history.push('');
       }
@@ -34,7 +40,6 @@ class App extends Component {
           user: user.email,
           uid: user.uid,
          })
-         console.log(listMsgData)
         firebase.database().ref('message/').set(listMsgData);
       } else {
 
@@ -49,7 +54,7 @@ class App extends Component {
     return (
       <div className='container'>
         <Message
-            listMsg = {this.state.listMsg} />
+            listMsg = {this.state.listMsg} user = {this.state.user} />
         <InputBar
             onClickButtonHandler = {this.onClickButtonHandlerData}
         />
